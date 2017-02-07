@@ -1,0 +1,139 @@
+.alert {
+  display: none;
+  cursor: pointer;
+}
+
+#loader {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.8)0%, rgba(68,68,68,0.8) 100%);
+  z-index: 10000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#loader div {
+  text-align: center;
+  font-weight: bold;
+  color: #4A4A4A;
+  background-color: #FFFFFF;
+  padding: 0.5em 1em 0.5em 1em;
+  border-radius: 5px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  user-select: none;
+  max-width: 80vw;
+  min-width: 220px;
+}
+
+#loader img {
+  margin-top: 0.5em;
+}
+
+li a {
+  cursor: pointer;
+}
+
+nav, .noselect {
+  user-select: none;
+  cursor: default;
+}
+
+.minilogo {
+    display: inline-block;
+    margin-right: 1em;
+    vertical-align: middle;
+}
+
+.skypebutton {
+    margin: 0;
+    display: inline-block;
+}
+
+.skypename {
+    display: inline-block;
+    margin-right: 1em;
+}
+
+.skypebutton img {
+    margin: 0 !important;
+    vertical-align: middle !important;
+}
+
+@media (max-width: 600px) {
+  .tablecol-600 {
+    display: none !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .tablecol-700 {
+    display: none !important;
+  }
+  .form-control{
+    margin-bottom: 0.5em;
+  }
+}
+
+@media (max-width: 800px) {
+  .tablecol-800 {
+    display: none !important;
+  }
+}
+
+.tableglyph {
+  text-align: center;
+  cursor: pointer;
+  width: auto;
+  max-width: auto !important;
+}
+
+td :not(.tableglyph) {
+  overflow: hidden;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  max-width: 10vw;
+}
+
+.glyphicon {
+  max-width: 1em;
+  margin: 0 !important;
+  padding: 0 !important;
+  user-select: none;
+}
+
+thead {
+  user-select: none;
+  cursor: default;
+}
+
+.page-header {
+  margin-top: -4em;
+  padding-top: 0;
+}
+
+.form-control {
+  margin-right: 0.5em;
+}
+
+.hidden {
+  display: none;
+}
+
+.nav-tabs {
+  border-bottom: 0;
+  margin-left: 1em;
+  user-select: none;
+}
+
+.formsubmit {
+  text-align: center;
+}
+
+.formsubmit button {
+  margin-right: 1em;
+  min-width: 80%;
+}

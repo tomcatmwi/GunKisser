@@ -1,0 +1,36 @@
+.input-group {
+  margin-bottom: 1em;
+}
+
+input[type=text], input[type=password], input[type=button] {
+    box-sizing: border-box;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+#login_copyright {
+    width: 100%;
+    font-size: 0.8em;
+    text-align: center;
+    color: #999;
+}
+
+#logincsajtarto1 {
+  text-align: right;
+  padding: 0;
+}
+
+#logincsajtarto2 {
+  padding: 0;
+}
+
+#logincsaj {
+  display: none;
+}
+
+@media screen and (min-width: 1200px) {
+#logincsaj {
+    display: inline-block;
+}
+}

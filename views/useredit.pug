@@ -1,0 +1,109 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{pagetitle}
+      div
+      
+        form.form-horizontal#form
+        
+          input(type='hidden', value=userdata._id).form-control#id
+          
+          mixin textinput(label, id, placeholder, value) 
+            .form-group
+              label.col-sm-3.control-label(for=id)= label
+              .col-sm-9
+                input(id=id, type='text', placeholder=placeholder, value=value).form-control
+
+          mixin select(label, dom_id, options_json, value, text, selected) 
+            .form-group
+              label.col-sm-3.control-label(for=dom_id)= label
+              .col-sm-9
+                select(id=dom_id).form-control
+                  for option in options_json
+                      option(value=option[value], selected=option[value] == selected) #{option[text]}
+                      
+          mixin phoneinput(label, id, countryfield, number1, number2, number3)
+            .form-group
+              label.col-sm-3.control-label(for=id)= label
+              .col-lg-9
+                  div.row
+                    div.col-xs-3.col-sm-3.col-md-3.col-lg-3
+                      input(id=id+'1', type='number', min=1, max=999, size=3, maxlength=3 value=number1).form-control
+                    div.col-xs-3.col-sm-3.col-md-3.col-lg-3
+                      input(id=id+'2',type='number', min=1, max=999, size=3, maxlength=3 value=number2).form-control
+                    div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+                      input(id=id+'3', type='number', min=111111, size=7, maxlength=7, value=number3).form-control
+          
+          div.panel.panel-default
+            div.panel-heading Személyes adatok
+            div.panel-body
+              +textinput('Az ügyfél neve', 'name', '', userdata.name)
+              +select('Az ügyfél állampolgársága', 'nationality', countries, 'id', 'namehun', userdata.nationality)
+              +select('Tartózkodási ország', 'country', countries, 'id', 'namehun', userdata.country)
+              +phoneinput('Telefonszám', 'phone', 'country', userdata.phone1, userdata.phone2, userdata.phone3)
+              +phoneinput('Fax', 'fax', 'country', userdata.fax1, userdata.fax2, userdata.fax3)
+              +textinput('Skype név', 'skype', '', userdata.skype)
+              +textinput('E-mail', 'email', '', userdata.email)
+              +textinput('Megjegyzések', 'remarks', '', userdata.remarks)
+            
+          div.panel.panel-default
+            div.panel-heading Az ügyfél címe
+            div.panel-body
+              +textinput('Állam, tartomány', 'province', 'Ha nincs, hagyd üresen', userdata.province)
+              +textinput('Település', 'city', '', userdata.city)
+              +textinput('Irányítószám', 'zip', '', userdata.zip)
+              +textinput('Utca neve', 'street', '', userdata.street)
+              +textinput('Házszám', 'houseno', '', userdata.houseno)
+              +textinput('Egyéb címadat', 'address_misc', 'Pl. emelet, ajtó, kapucsengő', userdata.address_misc)
+          
+          div.panel.panel-default
+            div.panel-heading Cégadatok
+            div.panel-body
+              +textinput('Cég neve', 'company_name', 'Ha nincs cég, hagyd üresen', userdata.company_name)
+              +textinput('Adószám', 'company_taxno', '', userdata.company_taxno)
+              +textinput('EU közösségi adószám', 'company_eutaxno', '', userdata.company_eutaxno)
+              +select('Cég országa', 'company_country', countries, 'id', 'namehun', userdata.company_country)
+              +textinput('Cég címe, állam, tartomány', 'company_province', 'Ha nincs, hagyd üresen', userdata.company_province)
+              +textinput('Cég címe, település', 'company_city', '', userdata.company_city)
+              +textinput('Cég címe, irányítószám', 'company_zip', '', userdata.company_zip)
+              +textinput('Cég címe, utca neve', 'company_street', '', userdata.company_street)
+              +textinput('Cég címe, házszám', 'company_houseno', '', userdata.company_houseno)
+              +textinput('Cég címe, egyéb címadat', 'company_address_misc', 'Pl. emelet, ajtó, kapucsengő', userdata.company_address_misc)
+
+          div.panel.panel-default
+            div.panel-heading Regisztráció
+            div.panel-body
+
+              +select('Jogosultsági szint', 'userlevel', userlevels, 'value', 'text', userdata.userlevel)
+
+              +textinput('Felhasználónév', 'username', '', userdata.username)
+
+              .form-group
+                label.col-sm-3.control-label(for=id) Jelszó kétszer
+                .col-lg-9
+                    div.row
+                      div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        input(type='password', value=userdata.password)#password1.form-control
+                      div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        input(type='password', value=userdata.password)#password2.form-control
+                        
+          div.alert.alert-danger#error
+
+          div.panel.panel-default
+            div.panel-body.formsubmit
+              .form-group
+                button#post.btn.btn-default #{buttonlabel}
+              .form-group
+                button(type=reset).btn.btn-default Mezők törlése
+              .form-group
+                button#cancel.btn.btn-default Mégsem
+
+include footer
+block footer
+  script(src='javascript/pages/useredit.js')

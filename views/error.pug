@@ -1,0 +1,15 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container.noselect
+      div#mangaerror
+        h1 #{title}
+        p #{body}
+        button.btn.btn-default(onclick="history.back();") Vissza
+      
+include footer
+block footer

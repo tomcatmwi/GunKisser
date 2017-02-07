@@ -1,0 +1,31 @@
+mixin staticmenu(url)
+  li
+    a(href= url)
+      block
+
+mixin separator()
+  li(role='separator').divider
+
+nav.navbar.navbar-default.navbar-static-top
+  div.container
+    div.navbar-header
+      button(type='button',
+             data-toggle='collapse',
+             data-target='#navbar',
+             aria-expanded='false',
+             aria-controls='navbar').navbar-toggle.collapsed
+        span.sr-only
+          |Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+      a.navbar-brand
+        |#{pagetitle}
+    div#navbar.navbar-collapse.collapse
+      ul.nav.navbar-nav
+
+        +staticmenu('/users')|Felhasználók
+        +staticmenu('/worksheets')|Munkalapok
+        +staticmenu('/guntemplates')|Fegyversablonok
+        +staticmenu('/mainparts')|Fődarabok
+        +staticmenu('/logout')|Kilépés

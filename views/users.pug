@@ -1,0 +1,116 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container
+      div.page-header
+
+        ul.nav.nav-tabs
+          li(linked='panel_operations' role='presentation').active
+            a Műveletek
+          li(linked='panel_search' role='presentation')
+            a Keresés
+          li(linked='panel_sort' role='presentation')
+            a Rendezés
+
+        div#panel_operations.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              button.btn.btn-default#newUserBtn Új ügyfél
+
+        div#panel_search.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                input#search(type='search', placeholder='Keresés').form-control
+              div.form-group
+                select#searchfield.form-control
+                  option(value='*') Bármelyik mező
+                  option(value='name') Ügyfél neve
+                  option(value='company_name') Cég neve
+                  option(value='city') Település
+                  option(value='street') Utcanév
+                  option(value='email') E-mail
+                  option(value='skype') Skype név
+                  option(value='company_city') Cég település
+                  option(value='company_street') Cég utcanév
+                  option(value='username') Felhasználónév
+                  option(value='remarks') Megjegyzések
+              div.form-group
+                select#searchmode.form-control
+                  option(value='0') Legyen benne
+                  option(value='1') Ezzel kezdődjön
+                  option(value='2') Teljes kifejezés
+              div.form-group
+                button#searchBtn.btn.btn-default Keresés
+                |&nbsp;
+                button#searchClearBtn.btn.btn-default Törlés
+
+        div#panel_sort.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                select#sortby.form-control
+                  option(value=0) Név, cégnév szerint
+                  option(value=1) Cégnév, név szerint
+                  option(value=2) Regisztráció dátuma szerint
+                  option(value=3) E-mail cím szerint
+                  option(value=4) Skype-név szerint
+              div.form-group
+                select#sortmode.form-control
+                  option(value=1) Emelkedő sorrendben
+                  option(value=-1) Csökkenő sorrendben
+              div.form-group
+                button#sortBtn.btn.btn-default Rendezés
+
+        div#error.alert.alert-danger
+
+        nav
+          ul.pagination
+            li
+              a &laquo;
+            li(onclick="loadstuff();")
+              a 1
+            li
+              a &raquo;
+
+        table.table.table-striped.table-sm.table-responsive.table-hover
+          thead
+            tr
+              th Név
+              th.tablecol-600 Cég neve
+              th.tablecol-600 Telefon
+              th.tablecol-700 E-mail
+              th.tablecol-700 Skype
+              th
+              th
+              th
+          tbody
+          
+          mixin user_row(id, name, company, phone1, phone2, phone3, mail, skype)
+            tr(id=id)
+              td= name
+              td.tablecol-600= company
+              td.tablecol-600
+                a(href='tel:'+phone1+phone2+phone3)= '+'+phone1+' '+phone2+' '+phone3
+              td.tablecol-700
+                a(href='mailto:'+mail)= mail
+              td.tablecol-700= skype
+              td.tableglyph
+                a(href='/userinfo/'+id)
+                  span.glyphicon.glyphicon-info-sign
+              td.tableglyph
+                a(href='/useredit/'+id)
+                  span.glyphicon.glyphicon-pencil
+              td.tableglyph
+                a(href='/userdelete/'+id)
+                  span.glyphicon.glyphicon-trash
+                
+          +user_row(0, 'Sample row', '', '00', '00', '0000000', 'nothing@nothing.no', 'nobody')
+
+include footer
+block footer
+  script(src='javascript/pages/users.js')

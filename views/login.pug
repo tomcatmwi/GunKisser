@@ -1,0 +1,46 @@
+include header
+block header
+
+block body
+
+    div.container
+      div.col-lg-3.noselect#logincsajtarto1
+        img(src='pic/loginmanga.jpg')#logincsaj
+      div.col-lg-6#logincsajtarto2
+        
+        div.panel.panel-default.noselect
+
+          div.panel-heading
+            h4.panel-title
+              |PuskaPuszi v1.0
+
+          div.panel-body
+
+            form#login(method='post')
+            
+            mixin textedit(content, type, id, value)
+              input(type=type,
+                    id=id,
+                    placeholder=content,
+                    value=value).form-control
+                      
+            +textedit('Felhasználónév', 'text', 'username', '')
+            +textedit('Jelszó', 'password', 'password', '')
+            
+            div#error.alert.alert-danger
+
+            input(type='button', value='Belépés')#login_button.btn.btn-lg.btn-default
+            
+            div#login_copyright
+              img(src='pic/pixeldog_mini.png').minilogo
+              |ezt is a pixeldog csinálta
+
+      div(class='col-lg-3')
+
+block footer
+footer
+  script(src='javascript/jquery-3.1.1.min.js')
+  script(src='javascript/bootstrap.min.js')
+  script(src='javascript/general.js')
+  script(src='javascript/md5.min.js')
+  script(src='javascript/pages/login.js')

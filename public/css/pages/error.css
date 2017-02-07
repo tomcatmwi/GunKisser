@@ -1,0 +1,14 @@
+#mangaerror {
+  padding: 0;
+}
+
+@media (min-width: 800px) {
+  #mangaerror {
+    background-image: url(../../pic/errormanga.jpg);
+    background-repeat: no-repeat;
+    padding-left: 200px;
+    padding-top: 10px;
+    min-height: 300px;
+    margin-top: -50px;
+  }
+}
