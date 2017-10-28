@@ -3,6 +3,14 @@ mixin staticmenu(url)
     a(href= url)
       block
 
+mixin dropdown(title, items)
+  li.dropdown
+    a.dropdown-toggle(data-toggle='dropdown') #{title}&nbsp;
+      span.caret
+    ul.dropdown-menu
+      for item in items
+        +staticmenu(item.url) #{item.label}
+
 mixin separator()
   li(role='separator').divider
 
@@ -24,8 +32,20 @@ nav.navbar.navbar-default.navbar-static-top
     div#navbar.navbar-collapse.collapse
       ul.nav.navbar-nav
 
-        +staticmenu('/users')|Felhasználók
-        +staticmenu('/worksheets')|Munkalapok
-        +staticmenu('/guntemplates')|Fegyversablonok
-        +staticmenu('/mainparts')|Fődarabok
-        +staticmenu('/logout')|Kilépés
+        +dropdown('Adatok', [ 
+                                        { label: 'Ügyfelek', url: '/users'  },
+                                        { label: 'Fegyverek', url: '/weapons'  }
+                                     ])
+        
+        +dropdown('Sablonok', [ 
+                                        { label: 'Fegyversablonok', url: '/weapon_templates' },
+                                        { label: 'Fegyverkategóriák', url: '/weapon_categories' },
+                                        { label: 'Jellegek', url: '/weapon_types' },
+                                        { label: 'Kaliberjelek', url: '/calibers' }
+                                     ])
+
+        +dropdown('Rendszer', [ 
+                                        { label: 'Hibabejelentő', url: '/bugs'  },
+                                        { label: 'Kilépés', url: '/logout'  }
+                                     ])
+                                     

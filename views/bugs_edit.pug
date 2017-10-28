@@ -1,0 +1,51 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{pagetitle}
+      div
+      
+        form.form-horizontal#form
+        
+          div.panel.panel-default
+            div.panel-heading A hiba részletei
+            div.panel-body
+
+              +textinput('A hiba rövid leírása', 'title', 'Pl.: "Nem kapcsolódik a szerver"', '')
+              - var severity_elements = [ { severity: 0, label: 'Jelentéktelen', hint: 'Nem zavarja a működést, de kellemetlen'}, { severity: 1, label: 'Enyhe', hint: 'A hiba megkerülhető, de zavaró'}, { severity: 2, label: 'Súlyos', hint: 'Egy vagy több fontos funkció helytelenül működik'}, { severity: 3, label: 'Kritikus', hint: 'Egy vagy több fontos funkció teljesen működésképtelen'}, { severity: 4, label: 'Fatális', hint: 'Teljes leállást okoz'}, { severity: 5, label: 'Fejlesztési javaslat', hint: 'Javaslat, ötlet továbbfejlesztéshez, módosítási kérelem'} ]
+              +select_with_hint('Súlyossági fok', 'severity', severity_elements, 'severity', 'label', 'hint', 0)
+              +textarea('A hiba részletes leírása', 'description', 'Részletesen fejtsd ki. HTML kódok használhatóak.', '', 10)
+              +textinput('Böngésző típusa és verziója', 'browser', 'Ha nem jelent itt meg, írd be', '')
+        
+          div.panel.panel-default
+            div.panel-heading Képek hozzáadása
+            div.panel-body
+            
+              button#btnUpload.btn.btn-default Hozzáadás
+              input#uploadFile(type="file", accept="image/*").hidden
+              
+              div#thumbnails
+              
+          div.alert.alert-danger#error
+
+          div.panel.panel-default
+            div.panel-body.formsubmit
+              div.row
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnPost.btn.btn-default Hiba felvétele
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnReset.btn.btn-default Mezők törlése
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnCancel.btn.btn-default Mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/bugs_edit.js')

@@ -1,0 +1,48 @@
+@page {
+		size: A4 portrait;
+		margin: 6mm;
+		bleed: 0;
+}
+
+@media print {
+    
+  body {
+    font-size: 1.5em;
+  }
+  
+  a[href]:after {
+    content: none !important;
+  }
+    
+  .noprint, .colordot, .footer {
+    display: none;
+  }
+  
+  h1 {
+    page-break-before: always;
+    page-break-after: never;
+  }
+  
+  .panel {
+    page-break-before: never;
+    page-break-inside: avoid;
+  }
+  
+  .print-break {
+    page-break-before: always;
+    page-break-after: never;
+  }
+
+  .row .col-xs-12 {
+    width: 50% !important;
+  }
+  
+  .panel-default > .panel-heading {
+      background-color: #CCCCCC !important;
+      background-image: none !important;
+      font-weight: bold !important;
+  }
+  
+}
+
+  

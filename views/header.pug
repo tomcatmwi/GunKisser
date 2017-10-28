@@ -5,20 +5,30 @@ html(lang='en')
 
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0')
     
     meta(name='description', content='PuskaPuszi 1.0')
     meta(name='author', content='Pixeldog')
 
-    link(rel='stylesheet', type='text/css', href='css/bootstrap.min.css')
-    link(rel='stylesheet', type='text/css', href='css/bootstrap-theme.min.css')
-    link(rel='stylesheet', type='text/css', href='css/sticky-footer-navbar.css')
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', type='text/css', href='/css/sticky-footer-navbar.css')
 
-    link(rel='stylesheet', type='text/css', href='css/main.css')
-    link(rel='stylesheet', type='text/css', href='css/pages/login.css')
-    link(rel='stylesheet', type='text/css', href='css/pages/error.css')
+    link(rel='stylesheet', type='text/css', href='/css/main.css')
+    link(rel='stylesheet', type='text/css', href='/css/print.css')
+    link(rel='stylesheet', type='text/css', href='/css/pages/login.css')
+    link(rel='stylesheet', type='text/css', href='/css/pages/error.css')
 
-    link(rel='icon', type='image/png', href='pic/pixeldog_mini.png')
+    link(rel='stylesheet', type='text/css', href='/css/img-uploader.css')
+
+    link(rel='icon', type='image/png', href='/pic/pixeldog_mini.png')
+
+    script(src='/javascript/jquery-3.1.1.min.js')
+    script(src='/javascript/bootstrap.min.js')
+    script(src='/javascript/md5.min.js')
+
+    script(src='/javascript/general.js')
+    script(src='/javascript/img-uploader.js')
 
     title PuskaPuszi 1.0
 
@@ -28,4 +38,4 @@ html(lang='en')
         span#loader_text
           |loading
         br
-        img(src='pic/ajax-loader.gif')
+        img(src='/pic/ajax-loader.gif')

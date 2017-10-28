@@ -1,5 +1,33 @@
 const api_url = 'https://localhost:3000';
 
+$(document).ready(function() {
+
+//  browser self-identify
+
+navigator.sayswho = (function(){
+        var ua= navigator.userAgent, tem, 
+        M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+        if(/trident/i.test(M[1])){
+            tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+            return 'IE/Edge '+(tem[1] || '');
+        }
+        if(M[1]=== 'Chrome'){
+            tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+            if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+        }
+        M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+        if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+        return M.join(' ');
+})();
+
+//  prevent form submit on Enter
+
+$(document).on("keypress", ":input:not(textarea)", function(event) {
+    return event.keyCode != 13;
+});
+
+//  set up AJAX
+
 $.ajaxSetup({
               type: 'POST',
               cache: false,
@@ -19,8 +47,6 @@ $.ajaxSetup({
               }
             });
 
-$(document).ready(function() {
-
 //  panel tab handling
 
   $('.panel-control').hide();
@@ -36,33 +62,13 @@ $(document).ready(function() {
     $('#'+$(this).attr('linked')).show();
   });
 
-//  paginator buttons
-
-  $('.pagination li').click(function(e) {
-    e.preventDefault();
-    
-    if ($(this).index() != 0 && $(this).index() != $(this).parent().children().length-1) {
-      $(this).parent().find('.active').removeClass('active');
-      $(this).addClass('active')
-    }
-    
-    else {
-      var current = $(this).parent().find('.active:first');
-
-      if ($(this).index() == 0 && current.index() > 1) {
-        $(this).parent().find('li:nth-child('+String(current.index())+')').trigger('click');
-      }
-      
-      if ($(this).index() == $(this).parent().find('li').length-1 && current.index() < $(this).parent().find('li').length-2) {
-        $(this).parent().find('li:nth-child('+String(current.index()+2)+')').trigger('click');
-      }
-    }
-  });
-});
+//  error stuff
 
 $('[id^=error]').click(function(e) {
   e.preventDefault();
   $(this).hide();
+});
+
 });
 
 function errormsg(id, msg, type) {
@@ -176,7 +182,7 @@ function in_array(needle, haystack) {
 //  Tests if this thing works at all...
 
 function test() {
-    alert('it worx');
+    alert('it workc');
 }
 
 function nl2br(str, is_xhtml) {

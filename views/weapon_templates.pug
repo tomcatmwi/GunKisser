@@ -1,0 +1,75 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container
+      div.page-header#controls
+
+        ul.nav.nav-tabs
+          li(linked='panel_search' role='presentation').active
+            a Keresés
+          li(linked='panel_operations' role='presentation')
+            a Műveletek
+
+        div#panel_search.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                input#search(type='search', placeholder='Keresés').form-control
+              div.form-group
+                select#searchmode.form-control
+                  option(value='0') Legyen benne
+                  option(value='1') Ezzel kezdődjön
+                  option(value='2') Teljes kifejezés
+              div.form-group
+                button#searchBtn.btn.btn-default Keresés
+  
+        div#panel_operations.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                button.btn.btn-default#newBtn Új fegyversablon
+                button#searchClearBtn.btn.btn-default Szűrés törlése
+              
+        div#error.alert.alert-danger
+
+        select#paginator.form-control
+        
+        table#datatable.table.table-striped.table-sm.table-responsive.table-hover
+          thead
+            tr
+              th Sablon neve
+              th.tablecol-600 Kaliber
+              th.tablecol-700 Kategória
+              th.tablecol-700 Jelleg
+              th.table-control
+              th.table-control
+              th.table-control
+          tbody
+            tr
+              td
+              td.tablecol-600
+              td.tablecol-700
+              td.tablecol-700
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-duplicate
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-pencil
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-trash
+
+          tfoot
+            tr
+              th Összesen
+              th#totalrecords(colspan=7).table-total
+
+
+include footer
+block footer
+  script(src='/javascript/pages/weapon_templates.js')

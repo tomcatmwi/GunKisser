@@ -1,0 +1,82 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{pagetitle}
+      div
+      
+        form.form-horizontal#form
+        
+          input(type='hidden', value=userdata._id).form-control#id
+          
+          div.panel.panel-default
+            div.panel-heading Személyes adatok
+            div.panel-body
+
+              +textinput('Név', 'name', '', userdata.name)
+              +checkbox('Ez az ügyfél jogi személy', userdata.legalEntity==1, 'legalEntity')
+
+              +textinput('Engedély száma', 'permitno', '', userdata.permitno)
+              +phoneinput('Telefonszám', 'phone', 'country', userdata.phone1, userdata.phone2, userdata.phone3)
+              +phoneinput('Fax', 'fax', 'country', userdata.fax1, userdata.fax2, userdata.fax3)
+              +textinput('Skype név', 'skype', '', userdata.skype)
+              +textinput('E-mail', 'email', '', userdata.email)
+              +textinput('Adószám', 'taxno', '', userdata.taxno)
+              +textinput('EU adószám', 'eutaxno', '', userdata.eutaxno)
+              +textinput('Megjegyzések', 'remarks', '', userdata.remarks)
+            
+          div.panel.panel-default
+            div.panel-heading Az ügyfél címe
+            div.panel-body
+              +select('Ország', 'country', countries, 'id', 'namehun', userdata.country)
+              +textinput('Állam, tartomány', 'province', 'Ha nincs, hagyd üresen', userdata.province)
+              +textinput('Település', 'city', '', userdata.city)
+              +textinput('Irányítószám', 'zip', '', userdata.zip)
+              +textinput('Utca neve', 'street', '', userdata.street)
+              +textinput('Házszám', 'houseno', '', userdata.houseno)
+              +textinput('Egyéb címadat', 'address_misc', 'Pl. emelet, ajtó, kapucsengő', userdata.address_misc)
+
+          div.panel.panel-default
+            div.panel-heading Regisztráció
+            div.panel-body
+
+              +select('Jogosultsági szint', 'userlevel', userlevels, 'value', 'text', userdata.userlevel)
+              +textinput('Felhasználónév', 'username', '', userdata.username)
+
+              .form-group
+                label.col-sm-3.control-label(for=id) Jelszó kétszer
+                .col-lg-9
+                    div.row
+                      div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        input(type='password', value=userdata.password)#password1.form-control
+                      div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+                        input(type='password', value=userdata.password)#password2.form-control
+                        
+          div.alert.alert-danger#error
+
+          div.panel.panel-default
+            div.panel-body.formsubmit
+              div.row
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#post.btn.btn-default #{buttonlabel}
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button(type=reset).btn.btn-default Mezők törlése
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#cancel.btn.btn-default Mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/users_edit.js')
+  script.
+    $(document).ready(function() {
+      document.countries = !{JSON.stringify(countries)}
+      $('#country').trigger('change');
+    });

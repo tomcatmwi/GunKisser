@@ -17,25 +17,23 @@ app.get('/login',
 
 app.post('/login',
     function(req, res) {
-        var ip = req.headers['x-forwarded-for'] || 
-        req.connection.remoteAddress || 
-        req.socket.remoteAddress ||
-        req.connection.socket.remoteAddress;
+        
+        var ip = general.getIP(req);
 
         general.getpostdata(req, function(postdata) {
-
+        
             //  verify username and password
 
-            mongodb.connect(mongodb_url, function(err, db) {
-                
+            general.MongoDB_connect(settings.mongoDB, function(db) {
+            
                 db.collection('users').find({ username: postdata.username,
                                               password: postdata.password,
                                               userlevel: { $gt: 0 }
                                             }).toArray(function(err, docs) {
                                             
                                                db.close();
-                                               if (docs.length > 0) {
-                                                       
+                                               if (err == null && docs.length > 0) {
+                                                 
                                                  general.log('Successful login: '+docs[0].name+'. IP: '+ip);
                                                  
                                                  // save session

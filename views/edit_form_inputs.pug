@@ -1,0 +1,95 @@
+mixin checkboxinput(label, checkboxlabel, id, checked)
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      div.checkbox
+          label
+            input(type='checkbox' checked=checked id=id)
+            span
+              |#{checkboxlabel}
+
+mixin textinput(label, id, placeholder, value)
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      input(id=id, type='text', placeholder=placeholder, value=value).form-control
+
+mixin select(label, dom_id, options_json, value, text, selected)
+  if(options_json == 'year')
+    -var thisyear = Date()
+    -thisyear = thisyear.substr(11, 4)
+    -options_json = []
+    -options_json.push({ value: 0, text: '-- Nem ismert --' })
+    -for (var year=thisyear; year>1850; year--)
+      -options_json.push({ value: year, text: year })
+    -value = 'value'
+    -text = 'text'
+    if (selected == 'unknown')
+      -options_json.unshift({ value: 0, text: '-- Ismeretlen --' })
+      -selected = 0
+    else if selected == 'thisyear'
+      -selected = thisyear
+
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=dom_id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      select(id=dom_id).form-control
+        each option in options_json
+          option(value=option[value], selected=(String(option[value]) == String(selected))) #{option[text]}
+
+mixin select_with_hint(label, dom_id, options_json, value, text, hint, selected) 
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=dom_id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      select(id=dom_id onchange="$(this).parent().find('.hint').find('p').html($(this).find('option:selected').attr('hint').replace(/\\n/gi, '<br />'));").form-control
+        each option in options_json
+          option(value=option[value], selected=(String(option[value]) == String(selected)), hint=option[hint]) #{option[text]}
+      .small.hint
+        p
+                      
+mixin phoneinput(label, id, countryfield, number1, number2, number3)
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      div.row
+        div.col-xs-3.col-sm-3.col-md-3.col-lg-3
+          input(id=id+'1', type='number', min=1, max=999, size=3, maxlength=3 value=number1).form-control
+        div.col-xs-3.col-sm-3.col-md-3.col-lg-3
+          input(id=id+'2',type='number', min=1, max=999, size=3, maxlength=3 value=number2).form-control
+        div.col-xs-6.col-sm-6.col-md-6.col-lg-6
+          input(id=id+'3', type='number', min=111111, size=7, maxlength=7, value=number3).form-control
+
+mixin textarea(label, id, placeholder, value, rows) 
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(for=id)= label
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      textarea(id=id, placeholder=placeholder, rows=rows, value=value).form-control
+
+mixin listvalue(label, value, link)
+  .container-fluid
+    .row(style='line-height: 1.75em')
+      .col-lg-3.col-md-3.col-sm-12.col-xs-12
+        strong
+          |#{label}
+      .col-lg-9.col-md-9.col-sm-12.col-xs-12
+        if (link)
+          a(href=link, target='_blank') #{value}
+        else
+          |#{value}
+
+mixin row(label, value, id)
+  tr
+    td 
+      b #{label}
+    if(id)   
+      td(id=id) #{value}
+    else
+      td #{value}
+
+mixin checkbox(label, checked, id)
+  .form-group
+    label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label
+      |&nbsp;
+    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+      input(type='checkbox', id=id, style='margin-right: 1em;')
+      label(for=id checked=checked) #{label}

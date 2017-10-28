@@ -1,0 +1,99 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container
+      div.page-header#controls
+
+        ul.nav.nav-tabs
+          li(linked='panel_search' role='presentation').active
+            a Keresés
+          li(linked='panel_sort' role='presentation')
+            a Rendezés
+          li(linked='panel_operations' role='presentation')
+            a Műveletek
+
+        div#panel_search.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                input#search(type='search', placeholder='Keresés').form-control
+              div.form-group
+                select#searchfield.form-control
+                  option(value='*') Bármelyik mező
+                  option(value='title') Cím
+                  option(value='stages.description') Szöveg
+              div.form-group
+                select#searchmode.form-control
+                  option(value='0') Legyen benne
+                  option(value='1') Ezzel kezdődjön
+                  option(value='2') Teljes kifejezés
+              div.form-group
+                button#searchBtn.btn.btn-default Keresés
+  
+        div#panel_sort.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                select#sortby.form-control
+                  option(value=0) Dátum szerint
+                  option(value=1) Súlyosság szerint
+                  option(value=2) Cím szerint
+                  option(value=3) Bejelentő szerint
+              div.form-group
+                select#sortmode.form-control
+                  option(value=-1) Csökkenő sorrendben
+                  option(value=1) Emelkedő sorrendben
+              div.form-group
+                button#sortBtn.btn.btn-default Rendezés
+
+        div#panel_operations.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                button.btn.btn-default#newUserBtn Új hiba jelentése
+                button#searchClearBtn.btn.btn-default Szűrés törlése
+              
+        div#error.alert.alert-danger
+
+        select#paginator.form-control
+        
+        table#datatable.table.table-striped.table-sm.table-responsive.table-hover
+          thead
+            tr
+              th Hiba rövid leírása
+              th.tablecol-700 Jelentette
+              th.tablecol-600 Bejelentve
+              th.tablecol-600 Utolsó lépés
+              th.tablecol-600.text-center Lépések
+              th.text-center Állapot
+              th
+              th
+          tbody
+            tr
+              td
+              td.tablecol-700
+              td.tablecol-600
+              td.tablecol-600
+              td.tablecol-600.text-center
+              td.text-center
+                span.label
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-info-sign
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-trash
+
+          tfoot
+            tr
+              th Összesen
+              th#totalrecords(colspan=7).table-total
+
+
+include footer
+block footer
+  script(src='/javascript/pages/bugs.js')

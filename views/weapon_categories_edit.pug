@@ -1,0 +1,39 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{pagetitle}
+      div
+      
+        form.form-horizontal#form
+        
+          input(type='hidden', value=data._id).form-control#id
+          
+          div.panel.panel-default
+            div.panel-heading Kategória
+            div.panel-body
+              +textinput('A kategória neve', 'name', '', data.name)
+          
+          div.alert.alert-danger#error
+
+          div.panel.panel-default
+            div.panel-body.formsubmit
+              div.row
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#post.btn.btn-default #{buttonlabel}
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button(type=reset).btn.btn-default Mezők törlése
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#cancel.btn.btn-default Mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/weapon_categories_edit.js')

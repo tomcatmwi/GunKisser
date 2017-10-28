@@ -1,0 +1,5 @@
+- var status = [ { 'label': 'Jelentéktelen', 'class': 'label-default' }, { 'label': 'Enyhe', 'class': 'label-primary' }, { 'label': 'Súlyos', 'class': 'label-warning' }, { 'label': 'Kritikus', 'class': 'label-danger' }, { 'label': 'Fatális', 'class': 'label-danger blink' }, { 'label': 'Fejlesztési javaslat', 'class': 'label-default' }, { 'label': 'Megoldva', 'class': 'label-success' } ]
+
+mixin severity(value)
+  span.label(class=status[value].class)
+    | #{status[value].label}

@@ -1,0 +1,161 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{pagetitle}
+  
+      div
+      
+        form.form-horizontal#form
+        
+          input(type='hidden', value=data._id).form-control#id
+
+          div.panel.panel-default
+            div.panel-heading Sablon betöltése
+            div.panel-body
+
+              .form-group
+                label.col-sm-3.control-label Válaszd ki a sablont
+                .col-lg-9
+                  div.input-group
+                    select#weapon_template_load.form-control
+                      each option in weapon_templates
+                        option(value=option._id) #{option.name}
+                    span.input-group-btn
+                      button#btnLoadTemplate.btn.btn-default Betöltés
+
+          div.alert.alert-danger#error_template
+
+          div.panel.panel-default
+            div.panel-heading A fegyver adatai
+            div.panel-body
+              
+              +textinput('Név, típus', 'name', '', data.name)
+              +textinput('Gyártási szám', 'serialno', '', data.serialno)
+              +select('Kaliber', 'caliber', calibers, 'name', 'name', data.caliber)
+              +select('Gyártási év', 'year', 'year', 'value', 'text', data.year)
+              +select('Kategória', 'category', weapon_categories, 'name', 'name', data.category)
+              +select('Jelleg', 'type', weapon_types, 'name', 'name', data.type)
+              +textinput('Leírás', 'description', '', data.description)
+
+          div.panel.panel-default
+            div.panel-heading Az elsütési teszt extra mezői
+            div.panel-body
+
+              +select('Mező neve', 'addTriggerTestField', triggerTestTypes, 'value', 'text', triggerTestTypes[0].value)
+
+              .form-group
+                .col-sm-3
+                .col-lg-7
+                  button.btn.btn-default#btnAddTriggerTestField Hozzáadás
+
+              table#tblTriggerTestFields.table.table-responsive.table-striped.table-hover
+                thead
+                  th Mező neve
+                  th.center
+                        
+                tbody
+                  tr.hidden
+                    td
+                    td.table-control
+                      a(onclick='trigger_test_field_delete($(this));').glyphicon.glyphicon-remove
+
+          div.panel.panel-default
+            div.panel-heading Fődarabok
+            div.panel-body
+
+              +textinput('Fődarab neve', 'addPart', '', '')
+              
+              .form-group
+                label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label Fődarab száma
+                .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                  .input-group
+                    span.input-group-btn
+                      button.btn.btn-default#btnGetNumber Fegyverszám
+                    input(type='text').form-control#addPartSerialNo
+                              
+              +checkboxinput('', 'Funkcióvizsgálat van', 'addPartFunctionTest', true)
+              +checkboxinput('', 'Küllemvizsgálat van', 'addPartAppearanceTest', true)
+              +checkboxinput('', 'Idomszeres vizsgálat van', 'addHeadspaceTest', true)
+              
+              .form-group
+                label.col-lg-3.col-md-3.col-sm-12.col-xs-12
+                .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                  div.checkbox
+                    label(style='white-space: nowrap;')
+                      input(type='checkbox' checked=true onchange="if (!$(this).prop('checked')) { $('#addShimTestMax').val(0) } else { $('#addShimTestMax').val(0.2); }" style="position: relative; top: 5px; display: inline;")#addShimTest
+                      span
+                        |Hézagolólemezes vizsg. max.:
+                        input(type='number' value=0.2 min=0.05 max=0.35 step=.05 style="margin: 0 1em 0 1em; display: inline; max-width: 5em; vertical-align: middle;").form-control#addShimTestMax
+                        |mm
+              
+              +checkboxinput('', 'Ez egy extra alkatrész', 'addPartExtra', false)
+
+              .form-group
+                .col-sm-3
+                .col-lg-7
+                  button.btn.btn-default#btnAddPart Hozzáadás
+                  button.btn.btn-default#btnCopyNumber Gyártási szám másolása minden alkatrészre
+
+              table#tblParts.table.table-responsive.table-striped.table-hover
+                thead
+                  th Fődarab neve
+                  th.center Gyártási szám
+                  th.center.tablecol-700(style='width: 3em; max-width: 3em;') FV
+                  th.center.tablecol-700(style='width: 3em; max-width: 3em;') KV
+                  th.center.tablecol-700(style='width: 3em; max-width: 3em;') ISZ
+                  th.center.tablecol-700(style='width: 5em; max-width: 6em;') HL
+                  th.center.tablecol-700(style='width: 3em; max-width: 3em;') XTR
+                  th.table-control
+                  th.table-control
+                  th.table-control
+                  th.table-control
+                        
+                tbody
+                  tr.hidden
+                    td
+                    td.right
+                      input.hiddenedit(disabled='disabled' onblur='disable_editors();').center
+                    td.center.tablecol-700(style='width: 3em; max-width: 3em;')
+                    td.center.tablecol-700(style='width: 3em; max-width: 3em;')
+                    td.center.tablecol-700(style='width: 3em; max-width: 3em;')
+                    td.center.tablecol-700(style='width: 5em; max-width: 6em;')
+                    td.center.tablecol-700(style='width: 3em; max-width: 3em;')
+                    td.table-control
+                      a(onclick='part_edit($(this));').glyphicon.glyphicon-pencil
+                    td.table-control
+                      a(onclick='part_up($(this));').glyphicon.glyphicon-chevron-up
+                    td.table-control
+                      a(onclick='part_down($(this));').glyphicon.glyphicon-chevron-down
+                    td.table-control
+                      a(onclick='part_delete($(this));').glyphicon.glyphicon-remove
+              
+          div.alert.alert-danger#error
+
+          .panel.panel-default
+            .panel-body.formsubmit
+              .row
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnSubmit.btn.btn-default #{buttonlabel}
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnReset.btn.btn-default Mezők törlése
+                div.col-xs-12.col-sm-12.col-md-4.col-lg-4
+                  button#btnCancel.btn.btn-default Mégsem
+
+include footer
+block footer
+  script.
+    $(document).ready(function() {
+      document.parts = !{JSON.stringify(data.parts)};
+      document.trigger_tests = !{JSON.stringify(data.trigger_tests)};
+    });
+
+  script(src='/javascript/pages/weapons_edit.js')

@@ -85,7 +85,7 @@ const self = module.exports = {
   
   checklogin: function(res, req) {
     if (req.path != '/login' && (typeof req.session === 'undefined' || typeof req.session.user === 'undefined')) {
-      res.redirect('/login');
+      res.render('login');
       return false;
     } else return true;
   },
@@ -97,8 +97,67 @@ const self = module.exports = {
       self.sendJSON(res, { error: 'Lejárt a munkameneted. A munka folytatásához újra be kell lépned.' });
       return false;
     } else return true;
-  }
+  },
 
 //  ---------------------------------------------------------------------------------------------------------------------------------------
 
+  getIP: function(req) {
+        return req.headers['x-forwarded-for'] || 
+        req.connection.remoteAddress || 
+        req.socket.remoteAddress ||
+        req.connection.socket.remoteAddress;
+  },
+  
+//  ---------------------------------------------------------------------------------------------------------------------------------------
+
+  formname: function(source) {
+        if (typeof source == 'undefined' || typeof source.firstname == 'undefined' || typeof source.lastname == 'undefined') return false;
+        var name  = source.firstname + ' ' + source.lastname;
+        if (typeof source.title != 'undefined' && source.title != null && source.title != '')
+          name = source.title + ' ' + name;
+        return name;
+  },
+  
+//  ---------------------------------------------------------------------------------------------------------------------------------------
+//  a random string generator for ids and stuff
+
+  RandomString: function(chars=12, numbers=true, onlynumbers=false) {
+    let str = '';
+    
+    if (!numbers)
+      var charray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    else
+      var charray = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    if (onlynumbers)
+      var charray = '0123456789';
+    
+    for (let t=0; t<=chars; t++)
+      str += charray.charAt(Math.floor(Math.random() * charray.length));
+    
+    return str;
+  },
+
+//  ---------------------------------------------------------------------------------------------------------------------------------------
+//  MongoDB connect
+  
+  MongoDB_connect: function(mongoData, callback) {
+  
+    global.mongodb.connect(mongoData.url, function(err, db) {
+
+      if (err) {
+        self.log(err.message);
+        process.exit();
+      }
+
+      db.authenticate(mongoData.username, mongoData.password, function(err, res) {
+        if(err) {
+          self.log(err.message);
+          process.exit();
+        }
+        return callback(db);
+      });
+    });
+  }
+
+//  ---------------------------------------------------------------------------------------------------------------------------------------  
 }

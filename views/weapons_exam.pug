@@ -1,0 +1,215 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    .container.noselect
+      .page-header
+        h1 Fegyvervizsgálat
+      div
+      
+        .panel.panel-default
+          .panel-heading A fegyver adatai
+          .panel-body
+            +listvalue('Fegyver típusa / neve', data.name)
+            +listvalue('Gyártási szám', data.serialno)
+            +listvalue('Kaliber', data.caliber)
+            +listvalue('Kategória', data.category)
+            +listvalue('Jelleg', data.type)
+            +listvalue('Gyártási év', data.year)
+            +listvalue('Adatbázisba felvéve', data.date_formatted)
+            input(type='hidden' value=data._id)#id
+
+        .panel.panel-default
+          .panel-heading A vizsgálatot végeztette
+          .panel-body
+
+              .form-group
+                .container-fluid
+                  .row(style="margin-bottom: 1em;")
+                    +select('A fegyver tulajdonosa', 'owner1', users, '_id', 'name', users[0])
+                  .row(style="margin-bottom: 1em;")
+                    +select('Vizsgáltatta', 'owner2', users, '_id', 'name', users[0])
+                  .row
+                    +select('Átadó személy', 'owner3', users, '_id', 'name', users[0])
+
+        .panel.panel-default
+          .panel-heading Általános értékelés
+          .panel-body
+          
+            +textarea('A fegyver általános állapotának értékelése', 'general_description', '', '', 5)
+            
+            .form-group
+              .col-3
+                button.btn.btn-default#btnUpload_general Kép feltöltése
+                input#uploadFile_general(type="file", accept="image/*").hidden
+              .col-9
+                div#thumbnails_general
+
+        .panel.panel-default
+          .panel-heading Sütésteszt
+          .panel-body
+          
+            mixin trigger_test(label, id)
+              .form-group
+                .container-fluid
+                  .row
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12
+                      strong
+                        |#{label}
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12(id='trigger_test_'+id)
+                      input(type='hidden', value=label)
+                      input.form-control.form-short(type='number', value=0, step=0.1, min=0.1, max=1000)
+                      span N
+                  
+            if (data.trigger_tests.length > 0)
+              -var t=0;
+              each trigger_test in data.trigger_tests
+                -t++
+                +trigger_test(trigger_test, t)
+            else
+              +trigger_test('Sütésteszt', 0)
+
+        .panel.panel-default
+          .panel-heading Irányzék-próba
+          .panel-body
+            .container-fluid.testgroup
+              .row
+                .col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(style='margin-bottom: .5em;')
+                  strong Az irányzék állapota
+                .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                  div.radiogroup
+                    label
+                      input(type='radio', checked=true, value=2, name='sight_test')
+                      div.colordot.green
+                      |Pontos
+
+                  div.radiogroup
+                    label
+                      input(type='radio', value=1, name='sight_test')
+                      div.colordot.yellow
+                      |Belövést igényel
+
+                  div.radiogroup
+                    label
+                      input(type='radio', value=0, name='sight_test')
+                      div.colordot.red
+                      |Cserét igényel
+
+        mixin test(label, id)
+          .container-fluid.testgroup
+            .row
+              .col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(style='margin-bottom: .5em;')
+                strong #{label}
+              .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                div.radiogroup
+                  label
+                    input(type='radio', checked=true, value=2, name=id)
+                    div.colordot.green
+                    |Megfelelő
+
+                div.radiogroup
+                  label
+                    input(type='radio', value=1, name=id)
+                    div.colordot.yellow
+                    |Javítás javasolt
+
+                div.radiogroup
+                  label
+                    input(type='radio', value=0, name=id)
+                    div.colordot.red
+                    |Cserét igényel
+          
+        mixin part(part, id)
+          .panel.panel-default.testgroup(id='part_test_'+t)
+            .panel-heading #{id}. #{part.name}
+            .panel-body
+            
+              if (part.test_appearance)
+                +test('Küllem, állapot', 'appearance_'+id)
+            
+              if (part.test_function)
+                +test('Funkciópróba', 'function_'+id)
+                
+              if (part.test_headspace)
+                .container-fluid
+                  .row
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(style='margin-bottom: .5em;')
+                      strong MEGY idomszer
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                      div.radiogroup
+                        label(style='margin-right: 1em;')
+                          input(type='radio', checked=true, value=1, id='headspace_go_'+id, name='headspace_go_'+id)
+                          |Sikeres
+                        label
+                          input(type='radio', value=0, id='headspace_go_'+id, name='headspace_go_'+id)
+                          |Sikertelen
+                          
+                .container-fluid
+                  .row
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label(style='margin-bottom: .5em;')
+                      strong NEM MEGY idomszer
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                      div.radiogroup
+                        label(style='margin-right: 1em;')
+                          input(type='radio', checked=true, value=1, id='headspace_nogo_'+id, name='headspace_nogo_'+id)
+                          |Sikeres
+                        label
+                          input(type='radio', value=0, id='headspace_nogo_'+id, name='headspace_nogo_'+id)
+                          |Sikertelen
+                            
+              if (part.test_shims)
+                .form-group
+                  .container-fluid
+                    .row
+                      label.col-lg-3.col-md-3.col-sm-12.col-xs-12.control-label Hézagolólemezes vizsgálat
+                      .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                        input.form-control.form-short(type='number', value=part.test_shims, min=0.01, max=part.test_shims, step=0.01, id='shims_'+id)
+                        span mm
+
+              .form-group
+                .container-fluid
+                  .row
+                    label.col-lg-3.col-md-3.col-sm-12.col-xs-12 Állapot jellemzése
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                      input(id='description_'+id, type='text').form-control
+
+              .form-group
+                .container-fluid
+                  .row
+                    .col-lg-3.col-md-3.col-sm-12.col-xs-12
+                      button.btn.btn-default(id='btnUpload_'+id) Kép feltöltése
+                      input(type="file", id='uploadFile_'+id, accept="image/*").hidden
+                    .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                      div(id='thumbnails_'+id)
+
+
+        
+    .container.noselect
+      .page-header
+        h1 Fődarabok vizsgálata
+      div
+      
+          -var t=0;
+          each part in data.parts
+            -t++;
+            +part(part, t)
+            
+      .alert.alert-danger#error
+
+      .panel.panel-default
+        .panel-body.formsubmit
+          .row
+            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+              button#btnSubmit.btn.btn-default Mentés
+            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+              button#btnClose.btn.btn-default Mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/weapons_exam.js')

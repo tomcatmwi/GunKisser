@@ -1,7 +1,7 @@
 {
-  "name": "gunkisser",
+  "name": "GunKisser",
   "version": "1.0.0",
-  "description": "An app to kiss guns",
+  "description": "Pisztojpusztító Peti Puskapiszkáldája",
   "main": "app.js",
   "scripts": {
     "test": "echo \"No test specified\" && exit 1"
@@ -17,15 +17,18 @@
   "author": "pixeldog studios",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.16.0",
-    "client-sessions": "^0.7.0",
+    "client-sessions": "^0.8.0",
+    "connect": "^3.5.1",
+    "dateformat": "^2.0.0",
     "express": "^4.14.1",
     "fs": "0.0.1-security",
     "https": "^1.0.0",
     "ipware": "^1.0.0",
-    "js-md5": "^0.4.2",
+    "js-md5": "^0.5.0",
     "latinize": "^0.4.0",
-    "mongodb": "^2.2.22",
+    "method-override": "^2.3.7",
+    "mongodb": "^3.4.2",
+    "multer": "^1.3.0",
     "pug": "^2.0.0-beta10"
   }
 }

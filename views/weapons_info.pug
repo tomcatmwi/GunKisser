@@ -1,0 +1,82 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 #{data.name}
+      div
+      
+        div.panel.panel-default
+          div.panel-heading Általános adatok
+          div.panel-body
+            +listvalue('Gyártási szám', data.serialno)
+            +listvalue('Kaliber', data.caliber)
+            +listvalue('Gyártási év', data.year)
+            +listvalue('Kategória', data.category)
+            +listvalue('Jelleg', data.type)
+            +listvalue('Rögzítve', data.date_formatted)
+            if (data.description)
+              +listvalue('Leírás', data.description)
+            input(type='hidden' value=data._id)#id
+
+          div.panel-footer
+            button.btn.btn-default#btnNewExam Új vizsgálati jegyzőkönyv
+            button.btn.btn-default#btnEditWeapon Fegyver módosítása
+            button.btn.btn-default#btnClose Bezárás
+
+        div.panel.panel-default
+          div.panel-heading Fődarabok
+          div.panel-body
+          
+            table#tblParts.table.table-responsive.table-striped.table-hover
+              thead
+                th Fődarab neve
+                th.tablecol-600 Gyártási szám
+                        
+              tbody
+                mixin part(part)
+                  tr
+                    td #{part.name}
+                    td.tablecol-600 #{part.serialno}
+                
+                each part in data.parts
+                  +part(part)
+
+        div.panel.panel-default
+          div.panel-heading Vizsgálati jegyzőkönyvek
+          div.panel-body
+            
+            table#tblReports.table.table-responsive.table-striped.table-hover
+              thead
+                th Dátum
+                th.tablecol-600 Vizsgálta
+                th(colspan=2)
+                        
+              tbody
+              
+              mixin weapons_exam(data)
+                tr
+                  td #{data.date_formatted}
+                  td.tablecol-600 #{data.examiner}
+                  td.table-control
+                    a(onclick='weapons_exam_view(\''+data._id+'\');')
+                      span.glyphicon.glyphicon-info-sign
+                  td.table-control
+                    a(onclick='weapons_exam_delete(\''+data._id+'\');')
+                      span.glyphicon.glyphicon-trash
+            
+              each weapons_exam in data.weapons_exam
+                +weapons_exam(weapons_exam)
+                
+        div.alert.alert-danger#error
+            
+include footer
+block footer
+  script(src='/javascript/pages/weapons_info.js')

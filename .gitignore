@@ -3,3 +3,13 @@
 
 # Ada Library Information
 *.ali
+
+*.odt
+nbproject
+ssl/*.key
+ssl/*.csr
+ssl/*.crt
+public/userdata
+print/*.*
+dump
+node_modules

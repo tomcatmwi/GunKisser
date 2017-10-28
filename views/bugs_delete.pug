@@ -1,0 +1,43 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include status_json
+block status_json
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 Hibajelzés törlése
+      div
+      
+        div.panel.panel-default
+          div.panel-body
+            p.lead Biztosan törölni akarod ezt a hibajelzést?
+
+            p
+              table.table.table-striped.table-responsive
+                +row('Cím', data.title)
+                +row('Súlyosság', data.severity)
+                +row('Rögzítve', data.date_formatted)
+                +row('Lépések', data.length)
+                +row('Azonosító', data._id, 'id')
+            
+        div.alert.alert-danger#error
+        
+        div.panel.panel-default
+          div.panel-body.formsubmit
+            div.row
+              div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                button#btnDelete.btn.btn-default Igen, törlöm
+              div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                button#btnCancel.btn.btn-default Nem, mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/bugs_delete.js')

@@ -1,0 +1,43 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+block body
+    div.container
+      div.page-header#controls
+
+        ul.nav.nav-tabs
+           li(linked='panel_operations' role='presentation')
+            a Műveletek
+
+        div#panel_operations.panel.panel-default.panel-control
+          div.panel-body
+            form.form-inline
+              div.form-group
+                button.btn.btn-default#newBtn Új kaliberjelzés
+              
+        div#error.alert.alert-danger
+
+        select#paginator.form-control
+        
+        table#datatable.table.table-striped.table-sm.table-responsive.table-hover
+          thead
+            tr
+              th Kaliberjelzés
+              th
+              th
+          tbody
+            tr
+              td
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-pencil
+              td.table-control
+                a
+                  span.glyphicon.glyphicon-trash
+
+include footer
+block footer
+  script(src='/javascript/pages/calibers.js')

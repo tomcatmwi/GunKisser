@@ -1,0 +1,39 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container.noselect
+      div.page-header
+        h1 Fegyversablon törlése
+      div
+      
+        div.panel.panel-default
+          div.panel-body
+            p.lead Biztosan törölni akarod ezt a sablont?
+
+            p
+              table.table.table-striped.table-responsive
+                +row('Sablon neve', data.name)
+                +row('Kategória', data.category)
+                +row('Kaliber', data.caliber)
+                +row('Azonosító', data._id, 'id')
+            
+        div.alert.alert-danger#error
+
+        div.panel.panel-default
+          div.panel-body.formsubmit
+            div.row
+              div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                button#btnDelete.btn.btn-default Igen, törlöm
+              div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+                button#btnCancel.btn.btn-default Nem, mégsem
+            
+include footer
+block footer
+  script(src='/javascript/pages/weapon_templates_delete.js')

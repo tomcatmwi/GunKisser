@@ -1,0 +1,213 @@
+include printheader
+block printheader
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    .container.noselect
+      .page-header-print      
+        h1 Fegyvervizsgálati lap
+      div
+
+        .panel.panel-default
+          .panel-heading.panel-heading-custom A fegyver általános adatai
+          .panel-body
+            +listvalue('Fegyver típusa / neve', data.weapon.name)
+            +listvalue('Gyártási szám', data.weapon.serialno)
+            +listvalue('Kaliber', data.weapon.caliber)
+            +listvalue('Kategória', data.weapon.category)
+            if(data.weapon.year > 0)
+                +listvalue('Gyártási év', data.weapon.year)
+            else
+                +listvalue('Gyártási év', 'Ismeretlen')
+            if (data.weapon.description)
+              +listvalue('Leírás', data.weapon.description)
+            +listvalue('Felvéve', data.weapon.date_formatted)
+            input(type='hidden' value=data.weapon._id)#id
+
+        .panel.panel-default
+          .panel-heading A tulajdonos adatai
+          .panel-body
+            +listvalue('Név', data.owner1.name)
+            +listvalue('Engedélyszám', data.owner1.permitno)
+            +listvalue('Ország', data.owner1.country.namehun)
+            if(data.owner1.province)
+              +listvalue('Állam, tartomány', data.owner1.province)
+            +listvalue('Irányítószám, település', data.owner1.zip+' '+data.owner1.city)
+            +listvalue('Utca, házszám', data.owner1.street+' '+data.owner1.houseno+'.')
+            if(data.owner1.address_misc)
+              +listvalue('Egyéb címadat', data.owner1.address_misc)
+            if(data.owner1.email)
+              +listvalue('E-mail', data.owner1.email, 'mailto:'+data.owner1.email)
+            if(data.owner1.skype)
+              +listvalue('Skype', data.owner1.skype, 'skype:'+data.owner1.skype)
+            +listvalue('Telefonszám', '+'+data.owner1.phone1+' ('+data.owner1.phone2+') '+data.owner1.phone3, 'tel:'+data.owner1.phone1+data.owner1.phone2+data.owner1.phone3)
+            if(data.owner1.fax)
+              +listvalue('Fax', '+'+data.owner1.fax1+' ('+data.owner1.fax2+') '+data.owner1.fax3, 'fax:'+data.owner1.fax1+data.owner1.fax2+data.owner1.fax3)
+            if(data.owner1.taxno)
+              +listvalue('Adószám', data.owner1.taxno)
+            if(data.owner1.eutaxno)
+              +listvalue('EU adószám', data.owner1.eutaxno)
+
+        .panel.panel-default
+          .panel-heading.panel-heading-custom Vizsgáltatta
+          .panel-body
+            +listvalue('Név', data.owner2.name)
+            +listvalue('Engedélyszám', data.owner2.permitno)
+            +listvalue('Ország', data.owner2.country.namehun)
+            if(data.owner2.province)
+              +listvalue('Állam, tartomány', data.owner2.province)
+            +listvalue('Irányítószám, település', data.owner2.zip+' '+data.owner2.city)
+            +listvalue('Utca, házszám', data.owner2.street+' '+data.owner2.houseno+'.')
+            if(data.owner2.address_misc)
+              +listvalue('Egyéb címadat', data.owner2.address_misc)
+            if(data.owner2.email)
+              +listvalue('E-mail', data.owner2.email, 'mailto:'+data.owner2.email)
+            if(data.owner2.skype)
+              +listvalue('Skype', data.owner2.skype, 'skype:'+data.owner2.skype)
+            +listvalue('Telefonszám', '+'+data.owner2.phone1+' ('+data.owner2.phone2+') '+data.owner2.phone3, 'tel:'+data.owner2.phone1+data.owner2.phone2+data.owner2.phone3)
+            if(data.owner2.fax)
+              +listvalue('Fax', '+'+data.owner2.fax1+' ('+data.owner2.fax2+') '+data.owner2.fax3, 'fax:'+data.owner2.fax1+data.owner2.fax2+data.owner2.fax3)
+            if(data.owner2.taxno)
+              +listvalue('Adószám', data.owner2.taxno)
+            if(data.owner2.eutaxno)
+              +listvalue('EU adószám', data.owner2.eutaxno)
+
+        .panel.panel-default
+          .panel-heading.panel-heading-custom Átadó személy
+          .panel-body
+            +listvalue('Név', data.owner3.name)
+            +listvalue('Engedélyszám', data.owner3.permitno)
+            +listvalue('Ország', data.owner3.country.namehun)
+            if(data.owner3.province)
+              +listvalue('Állam, tartomány', data.owner3.province)
+            +listvalue('Irányítószám, település', data.owner3.zip+' '+data.owner3.city)
+            +listvalue('Utca, házszám', data.owner3.street+' '+data.owner3.houseno+'.')
+            if(data.owner3.address_misc)
+              +listvalue('Egyéb címadat', data.owner3.address_misc)
+            if(data.owner3.email)
+              +listvalue('E-mail', data.owner3.email, 'mailto:'+data.owner3.email)
+            if(data.owner3.skype)
+              +listvalue('Skype', data.owner3.skype, 'skype:'+data.owner3.skype)
+            +listvalue('Telefonszám', '+'+data.owner3.phone1+' ('+data.owner3.phone2+') '+data.owner3.phone3, 'tel:'+data.owner3.phone1+data.owner3.phone2+data.owner3.phone3)
+            if(data.owner3.fax)
+              +listvalue('Fax', '+'+data.owner3.fax1+' ('+data.owner3.fax2+') '+data.owner3.fax3, 'fax:'+data.owner3.fax1+data.owner3.fax2+data.owner3.fax3)
+            if(data.owner3.taxno)
+              +listvalue('Adószám', data.owner3.taxno)
+            if(data.owner3.eutaxno)
+              +listvalue('EU adószám', data.owner3.eutaxno)
+
+        .panel.panel-default
+          .panel-heading.panel-heading-custom A vizsgálat adatai
+          .panel-body
+            +listvalue('Vizsgálat dátuma', data.date_formatted)
+            +listvalue('Vizsgálta', data.examiner)
+
+    .container.noselect
+      .page-header-print      
+        h1 Vizsgálati eredmények
+      div
+
+        .panel.panel-default
+          .panel-heading.panel-heading-custom A fegyver általános állapota
+          .panel-body
+            +listvalue('Állapot leírása', data.general_description)
+            each test in data.trigger_tests
+              if (test.name)
+                +listvalue(test.name, test.result+' N')
+              else
+                +listvalue('Sütésteszt', test.result+' N')
+
+            .container-fluid  
+              .row(style='line-height: 1.75em')
+                .col-lg-3.col-md-3.col-sm-12.col-xs-12
+                  strong Az irányzék állapota
+                .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                  if (data.sight_test == 2)
+                    .colordot.green.noprint
+                    |Pontos
+                  if (data.sight_test == 1)
+                    .colordot.yellow.noprint
+                    |Belövést igényel
+                  if (data.sight_test == 0)
+                    .colordot.red.noprint
+                    |Használhatatlan
+
+            if (data.images)
+              div(style='margin-top: 1.5em;')
+                each image in data.images
+                  img(src='/userdata/weapon_exams/'+image).printimage
+            
+    .container.noselect
+      .page-header-print      
+        h1 Fődarabok állapota
+      div
+      
+      mixin part_test(serialno, part, data, counter)
+        .panel.panel-default
+          .panel-heading
+            |#{counter+1}. #{part.name}
+            if (part.serialno && part.serialno != serialno)
+                |&nbsp;(gy.sz.: #{part.serialno})
+          .panel-body
+
+            mixin status(label, value)
+              .container-fluid  
+                .row(style='line-height: 1.75em')
+                  .col-lg-3.col-md-3.col-sm-12.col-xs-12
+                    strong #{label}
+                  .col-lg-9.col-md-9.col-sm-12.col-xs-12
+                    if (value == 2)
+                      .colordot.green.noprint
+                      |Megfelelő
+                    if (value == 1)
+                      .colordot.yellow.noprint
+                      |Javítás javasolt
+                    if (value == 0)
+                      .colordot.red.noprint
+                      |Cserét igényel
+
+            if (data.description)
+              +listvalue('Állapot leírása', data.description)
+
+            if (data.appearance)
+              +status('Küllem, állapot', data.appearance)
+
+            if (data.function)
+              +status('Funkciópróba', data.function)
+              
+            if (data.headspace_go == 0)
+              +listvalue('Megy idomszer', 'Sikertelen')
+            if (data.headspace_go == 1)
+              +listvalue('Megy idomszer', 'Sikeres')
+              
+            if (data.headspace_nogo == 0)
+              +listvalue('Nem megy idomszer', 'Sikertelen')
+            if (data.headspace_nogo == 1)
+              +listvalue('Nem megy idomszer', 'Sikeres')
+              
+            if (data.shims)
+              +listvalue('Hézagolólemezes vizsgálat', data.shims+' mm')
+
+            if (data.images)
+              div(style='margin-top: 1.5em;')
+                each image in data.images
+                  img(src='/userdata/weapon_exams/'+image).printimage
+              
+      -var counter=0;      
+      each part_test in data.parts_tests
+        +part_test(data.weapon.serialno, data.weapon.parts[counter], part_test, counter)
+        -counter++
+
+      .panel.panel-default.noprint
+        .panel-body.formsubmit
+          .row
+            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+              button#btnPrint.btn.btn-default Nyomtatás
+            div.col-xs-12.col-sm-12.col-md-6.col-lg-6
+              button#btnClose.btn.btn-default Bezárás
+
+include footer
+block footer
+  script(src='/javascript/pages/weapons_exam_sheet.js')

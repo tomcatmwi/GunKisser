@@ -1,0 +1,80 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include status_json
+block status_json
+
+include edit_form_inputs
+block edit_form_inputs
+
+block body
+    div.container
+      div.page-header
+
+        .panel.panel-default
+          .panel-body
+          
+            .lead
+              |#{data.name}
+            input(type='hidden' value=data._id)#id
+
+            .container-fluid
+              .row
+                .col-sm-12
+
+                  .panel.panel-default.panel-fullheight
+                    .panel-heading.panel-default
+                      |Adatok
+                    .panel-body
+                      +listvalue('Eng. sz.', data.permitno)
+                      +listvalue('Regisztrálva', data.date_formatted)
+                      
+                      +listvalue('E-mail', data.email, 'mailto:'+data.email)
+                      if (data.skype != '')
+                        +listvalue('Skype', data.skype, 'skype:'+data.skype)
+                      +listvalue('Telefon', data.phoneFormatted, 'tel:'+data.phone)
+                      if (data.fax.length > 8)
+                        +listvalue('Fax', data.faxFormatted, 'fax:'+data.fax)
+                      if (data.taxno)
+                        +listvalue('Adószám', data.taxno)
+                      if (data.eutaxno)
+                        +listvalue('EU adószám', data.eutaxno)
+
+              .row
+                .col-sm-12
+                  .panel.panel-default
+                    .panel-heading.panel-default
+                      |Cím
+                    .panel-body
+
+                      if (data.country.namehun != data.country.name)
+                        +listvalue('Ország', data.country.namehun+' ('+data.country.name+')')
+                      else
+                        +listvalue('Ország', data.country.namehun)
+
+                      if (data.province != '')
+                        +listvalue('Állam, tartomány', data.province)
+                      +listvalue('Település', data.zip+' '+data.city)
+                      +listvalue('Utca, házszám', data.street+' '+data.houseno)
+                      if (data.address_misc != '')
+                        +listvalue('Egyéb címadat', data.address_misc)
+
+              .row
+                .col-sm-12
+                  .panel.panel-default.panel-fullheight
+                    .panel-heading.panel-default
+                      |Megjegyzések
+                    .panel-body
+                        |#{data.remarks.replace(/\n/g, '<br />')}
+
+            
+          .panel-footer
+            button#btnEditUser.btn.btn-default Adatok szerkesztése
+            button#btnClose.btn.btn-default Bezárás
+
+include footer
+block footer
+  script(src='/javascript/pages/users_info.js')

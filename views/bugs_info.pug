@@ -1,0 +1,95 @@
+include header
+block header
+
+include mainmenu
+block mainmenu
+
+include status_json
+block status_json
+
+block body
+    div.container
+      div.page-header
+
+        .panel.panel-default
+          .panel-body
+          
+            .lead
+              |#{data.title}
+            input(type='hidden' value=data._id)#id
+
+            mixin listvalue(label, value)
+              .container-fluid
+                .row
+                  .col-sm-3
+                    strong
+                      |#{label}
+                  .col-lg-9
+                    |#{value}
+
+            mixin severity_header(label, value)
+              .container-fluid
+                .row
+                  .col-sm-3
+                    strong
+                      |#{label}
+                  .col-lg-9
+                    .span.label(class=status[value].class)
+                      |#{status[value].label}
+                    
+            +listvalue('Felvette', data.userdata.name)
+            +listvalue('Dátum', data.date_formatted)
+            +listvalue('Böngésző típusa', data.browser)
+            +listvalue('Lépések', data.stages.length)
+            +listvalue('Utolsó lépés', data.stages[data.stages.length-1].date_formatted)
+            +severity_header('Jelenlegi állapot', data.severity)
+            
+          .panel-footer
+            button#btnAddNew.btn.btn-default Új lépés hozzáadása
+            button#btnClose.btn.btn-default Bezárás
+
+      mixin stage(data)
+        div.panel.panel-default
+          div.panel-heading
+            strong
+              |#{data.name}
+
+            span.pull-right.tablecol-700.panelheader-field
+              |#{data.date_formatted}
+
+            span.pull-right.panelheader-field
+              if data.previous_severity != data.severity    
+                +severity(data.previous_severity)
+                span.glyphicon.glyphicon-arrow-right
+                +severity(data.severity)
+                
+          div.panel-body
+            
+            .container-fluid
+              | !{data.description.replace(/\n/g, '<br />')}
+              
+            div(id='thumbnails_'+data.id)
+              
+      for stage in data.stages
+        +stage(stage)
+
+include footer
+block footer
+
+  script(src='/javascript/pages/bugs_info.js')
+
+  script.
+    $(document).ready(function() {
+
+      var data = !{JSON.stringify(data)};
+
+      for(t in data.stages) {
+          var id = data.stages[t].id;
+          for (x in data.stages[t].files) {
+            var filename = data.stages[t].files[x];
+            var temp = imgUploader('img_'+id, 'viewer');
+            temp.loadImage('../userdata/bugreport_screenshots/'+filename);
+            $('#thumbnails_'+id).append(temp);
+          }
+      }
+    });
